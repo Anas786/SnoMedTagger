@@ -1,0 +1,12 @@
+<!-- creole.xml SnoMedTagger -->
+<!--  anas__000, 13/11/2016 -->
+
+<!--
+This file just references the JAR file that contains the compiled resource.
+Configuration is contained in the @CreoleResource annotation on 
+com.gate.plugin.snomedtagger.SnoMedTagger.
+-->
+
+<CREOLE-DIRECTORY>
+  <JAR SCAN="true">SnoMedTagger.jar</JAR>
+</CREOLE-DIRECTORY>
