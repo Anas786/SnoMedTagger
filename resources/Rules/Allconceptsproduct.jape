@@ -1,0 +1,46 @@
+/* SnoMedTagger : SNOMED CT Medical Tagger
+ *  Developed by Hafiz Muhammad Anas, Contact : anas_abdani@hotmail.com Or hanas@knysys.com
+ *  Developed by Saman Hina, Contact : saman.hina@gmail.com Or scsh@leeds.ac.uk
+ *  -----------------------------------------------------------------------------------
+ *  Copyright (c) 2012-2013, The University of Leeds.
+ *  This application is developed as part of GATE (see http://gate.ac.uk/), and is free
+ *  for research purposes 
+ *  Saman Hina, 18-04-2012
+ *  -----------------------------------------------------------------------------------
+ *  SnoMedGazetteer.java
+ *
+ * Copyright (c) 2000-2012, The University of Sheffield.
+ *
+ * This file is part of GATE (see http://gate.ac.uk/), and is free
+ * software, licenced under the GNU Library General Public License,
+ * Version 3, 29 June 2007.
+ *
+ * A copy of this licence is included in the distribution in the file
+ * licence.html, and is also available at http://gate.ac.uk/gate/licence.html.
+ *
+ *  anas__000, 13/11/2016
+ *
+ * For details on the configuration options, see the user guide:
+ * http://gate.ac.uk/cgi-bin/userguide/sec:creole-model:config
+ */
+
+
+Phase: Allproduct
+Input: Token Lookup 
+Options: control = appelt
+
+Rule: Test8
+Priority:50
+(
+{Lookup.majorType == product, Lookup.majorType != substance}
+):con
+-->
+:con.ProductOrSubstance = {Rule=Test8}
+
+Rule: Test17
+Priority:80
+(
+{Lookup.majorType==substance}
+):con
+-->
+:con.ProductOrSubstance = {Rule=Test17}

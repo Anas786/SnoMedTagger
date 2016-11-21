@@ -1,0 +1,2896 @@
+/* SnoMedTagger : SNOMED CT Medical Tagger
+ *  Developed by Hafiz Muhammad Anas, Contact : anas_abdani@hotmail.com Or hanas@knysys.com
+ *  Developed by Saman Hina, Contact : saman.hina@gmail.com Or scsh@leeds.ac.uk
+ *  -----------------------------------------------------------------------------------
+ *  Copyright (c) 2012-2013, The University of Leeds.
+ *  This application is developed as part of GATE (see http://gate.ac.uk/), and is free
+ *  for research purposes 
+ *  Saman Hina, 18-04-2012
+ *  -----------------------------------------------------------------------------------
+ *  SnoMedGazetteer.java
+ *
+ * Copyright (c) 2000-2012, The University of Sheffield.
+ *
+ * This file is part of GATE (see http://gate.ac.uk/), and is free
+ * software, licenced under the GNU Library General Public License,
+ * Version 3, 29 June 2007.
+ *
+ * A copy of this licence is included in the distribution in the file
+ * licence.html, and is also available at http://gate.ac.uk/gate/licence.html.
+ *
+ *  anas__000, 13/11/2016
+ *
+ * For details on the configuration options, see the user guide:
+ * http://gate.ac.uk/cgi-bin/userguide/sec:creole-model:config
+ */
+
+Phase: all
+Input: Token Lookup SpaceToken
+Options: control = all
+
+
+//Total Number of rules = 316
+//1. Body structure = 13
+//2. Disorder = 42
+//3. Environment = 20
+//4. Findings = 45
+//5. Observable Entity = 10
+//6. Occupation = 15
+//7. Organism = 11
+//8. Person = 6
+//9. Physical object = 27
+//10.Procedure = 52
+//11.Qualifier value = 12
+//12.Record artifact = 15
+//13.Regime therapy = 14
+//14.Situation = 17
+//15.all concepts = 17
+
+//---------------------------Body Structures = 13 ---------------------------------------------
+Rule: Test1
+(
+//Body structures with paranthesis
+//1
+	(
+	{Lookup.majorType==body}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.kind==punctutation,Token.position==startpunct,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==body}											
+	{Token.kind==punctutation,Token.position==endpunct,SpaceToken.string !=~ "[\\n\\r]"}
+	)
+//2
+	|(
+	{Token.kind==punctutation,Token.position==startpunct,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==body}											
+	{Token.kind==punctutation,Token.position==endpunct,SpaceToken.string !=~ "[\\n\\r]"}
+	)
+//Body structures with ccordinating conjunction 'CC' and punctuation
+//3
+	|(
+	{Lookup.majorType==body}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.category==CC}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==body}
+	)
+//4
+	|(
+	{Lookup.majorType==body}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.category==CC}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==body}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.category==CC}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==body}
+	)
+//5
+	|(
+	{Lookup.majorType==body}
+	{Token.kind==punctuation,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==body}
+	{Token.kind==punctuation,SpaceToken.string !=~ "[\\n\\r]"}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.category==CC}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==body}
+	)
+//6
+	|(
+	{Lookup.majorType==body}
+	{Token.kind==punctuation,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==body}
+	{Token.kind==punctuation,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==body}
+	{Token.kind==punctuation,SpaceToken.string !=~ "[\\n\\r]"}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.category==CC}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==body}
+	)
+//Body structures using 'TO', preposition (IN) ,determiner (DT) and subcoordinating conjunctions
+//7
+	|(
+	{Lookup.majorType==body}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.category==IN}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==body}
+	)
+//8
+	|(
+	{Lookup.majorType==body}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.category==IN}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.category==DT}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==body}
+	)
+//9
+	|(
+	{Lookup.majorType==body}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.category==TO}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==body}
+	)
+//10
+	|(
+	{Lookup.majorType==body}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.category==TO}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.category==DT}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==body}
+	)
+//Body structures with other semantic types and compound body structures.	
+//11
+	|(
+	{Lookup.majorType==body}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==body}
+	)	
+//12
+	|(
+	{Lookup.majorType==body}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==body}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==body}
+	)	
+//13
+	|(
+	{Lookup.majorType==qualifier}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==body,Token.string!="per"}
+	)	
+)
+:con
+-->
+:con.BodyStructure = {Rule=Test1}
+
+//-----------------------------------------------Disorder=42----------------------------------------------------------------
+
+Rule: Test2
+(
+//Disorder 
+//1
+	(
+	{Lookup.majorType==disorder}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==disorder}
+	)|
+//2	
+	(
+	{Lookup.majorType==disorder}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==disorder}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==disorder}
+	)|
+//3
+// disorder with other semantic types 	
+	(
+	{Lookup.majorType==disorder}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==body}
+	)|
+//4	
+	(
+	{Lookup.majorType==body}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==disorder}
+	)|
+//5	
+	(
+	{Lookup.majorType==disorder}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==attribute}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==procedure}
+	)|
+//6 
+	(
+	{Lookup.majorType==disorder}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==person}
+	)|
+//7	
+	(
+	{Lookup.majorType==disorder}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==attribute}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==organism}
+	)|
+//8	
+	(
+	{Lookup.majorType==body}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==body}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==Disorder}
+	)|
+//9	
+	(
+	{Lookup.majorType==disorder}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==attribute}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==disorder}
+	)|
+//10
+	(
+	{Lookup.majorType==organism}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==disorder}
+	)|
+
+//11
+//Disorder using 'TO', preposition (IN) ,determiner (DT) and subcoordinating conjunctions
+//using JJ and attribute
+	(
+	{Lookup.majorType==disorder}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.category==IN}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==disorder}
+	)|
+//12	
+	(
+	{Lookup.majorType==disorder}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.category==IN}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.category==DT}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==disorder}
+	)|
+//13	
+	(
+	{Lookup.majorType==disorder}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.category==IN}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.category==DT}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==disorder}
+	)|
+//14
+	(
+	{Lookup.majorType==disorder}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.category==IN}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==disorder}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.category==IN}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.category==DT}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==body}
+	)|
+	
+//15	
+	(
+	{Lookup.majorType==disorder}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.category==JJ}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==organism}
+	)|
+//16	
+	(
+	{Lookup.majorType==disorder}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.category==CC}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==disorder}
+	)|
+//17
+	(
+	{Lookup.majorType==disorder}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.category==IN}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==body}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.category==CC}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.category==DT}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==body}
+	)|	
+//18
+	(
+	{Lookup.majorType==disorder}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.category==IN}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==body}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.category==CC}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==body}
+	)|	
+//19
+	(
+	{Lookup.majorType==disorder}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.category==IN}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==body}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.category==CC}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==body}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==body}
+	)|	
+//20
+	(
+	{Lookup.majorType==disorder}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.category==TO}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==product}
+	)|	
+//21
+	(
+	{Lookup.majorType==disorder}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.category==TO}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==substance}
+	)|	
+//22
+	(
+	{Lookup.majorType==disorder}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==attribute}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.category==DT}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==procedure}
+	)|	
+//23
+	(
+	{Lookup.majorType==disorder}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.category==IN}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==body}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.category==CC}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==body}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.category==IN}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==body}
+	)|	
+//24
+	(
+	{Lookup.majorType==disorder}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.category==IN}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==procedure}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.category==IN}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==body}
+	)|	
+//25
+	(
+	{Lookup.majorType==disorder}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.category==IN}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.category==DT}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==body}
+	)|
+//26
+	(
+	{Lookup.majorType==disorder}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.category==IN}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==body}
+	)|
+//27
+	(
+	{Lookup.majorType==disorder}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.category==IN}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.category==DT}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==finding}
+	)|
+//28
+	(
+	{Lookup.majorType==disorder}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.category==IN}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==finding}
+	)|
+//29
+	(
+	{Lookup.majorType==disorder}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==qualifier}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.category==TO}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==finding}
+	)|
+//using punctutation
+//30
+	(
+	{Lookup.majorType==disorder}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==body}
+	{Token.kind==punctuation,SpaceToken.string !=~ "[\\n\\r]"}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==body}
+	)|
+//31
+	(
+	{Lookup.majorType==disorder}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==body}
+	{Token.kind==punctuation,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==body}
+	)|
+//32
+	(
+	{Lookup.majorType==disorder}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.subkind==dashpunct}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==disorder}
+	)|
+//33
+	(
+	{Lookup.majorType==disorder}
+	{Token.subkind==dashpunct}
+	{Lookup.majorType==disorder}
+	)|
+//34
+	(
+	{Lookup.majorType==disorder}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.kind==punctuation,SpaceToken.string !=~ "[\\n\\r]"}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==body}
+	)|
+//35
+	(
+	{Lookup.majorType==disorder}
+	{Token.kind==punctuation,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==body}
+	)|
+//36
+	(
+	{Lookup.majorType==disorder}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.kind==punctuation,SpaceToken.string !=~ "[\\n\\r]"}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.category==CC}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==body}
+	)|
+//37
+	(
+	{Lookup.majorType==qualifier,Token.string!="[Nn]o"}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==disorder}
+	)|
+//38
+	(
+	{Lookup.majorType==qualifier}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==disorder}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.category==IN}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==body}
+	)|
+//39
+	(
+	{Lookup.majorType==qualifier}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==disorder}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==body}
+	)|
+//40
+	(
+	{Lookup.majorType==qualifier}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.kind==punctuation}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==disorder}
+	)|
+//41
+	(
+	{Lookup.majorType==qualifier}
+	{Token.kind==punctuation,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==disorder}
+	)|
+//42
+	(
+	{Lookup.majorType==qualifier}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==disorder}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.category==IN}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==qualifier}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==disorder}
+	)
+)
+:con
+-->
+:con.Disorder = {Rule=Test2}
+
+//-------------------------------------------------Environment = 20 -------------------------------------------------------------
+Rule: Test3
+(
+//Environment within environment phrase
+//1
+	(
+	{Lookup.majorType==environment}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==environment}
+	)|
+//2
+	(
+	{Lookup.majorType==environment}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==environment}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==environment}
+	)|
+//Environment phrasal concept using 'VBG'
+//3
+	(
+	{Token.category == VBG}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==environment}
+	)|
+//4
+//Environment using ccordinating conjunction 'CC' and punctuation
+	(
+	{Lookup.majorType==environment}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.category==CC}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==environment}
+	)|
+//5
+	(
+	{Lookup.majorType==environment}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.category==CC}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.category==DT}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==environment}
+	)|
+//6	
+	(
+	{Lookup.majorType==environment}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.kind==punctuation,SpaceToken.string !=~ "[\\n\\r]"}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==environment}
+	)|
+
+//7	
+	(
+	{Lookup.majorType==environment}
+	{Token.kind==punctuation,SpaceToken.string !=~ "[\\n\\r]"}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==environment}
+	)|
+//8
+	(
+	{Lookup.majorType==environment}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.kind==punctuation,Token.subkind==dashpunct,SpaceToken.string !=~ "[\\n\\r]"}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==environment}
+	)|
+//Environment using 'TO', preposition (IN) ,determiner (DT) and subcoordinating conjunctions
+//9
+	(
+	{Lookup.majorType==environment}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.category==IN}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==environment}
+	)|
+//10	
+	(
+	{Lookup.majorType==environment}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.category==IN}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.category==DT}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==environment}
+	)|
+//11
+	(
+	{Lookup.majorType==environment}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.category==TO}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==environment}
+	)|
+	
+//12
+	(
+	{Lookup.majorType==environment}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.category==IN}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==environment}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==environment}
+	)|
+	
+//13	
+	(
+	{Lookup.majorType==environment}
+	{SpaceToken}
+	{Token.category==IN}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.category==DT}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==environment}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==environment}
+	)|
+//Environment phrase with other tags 'Person','Occupation','Physical Object', 'qualifier value'
+//14	
+	
+	(
+	{Lookup.majorType==physical}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==environment}
+	)|
+	
+//15	
+	(
+	{Lookup.majorType==environment}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.category==IN}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==person}
+	)|
+	
+//16	
+	(
+	{Lookup.majorType==person}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==environment}
+	)|
+	
+//17	
+	(
+	{Lookup.majorType==environment}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.category==VBN,Token.affix==ed}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.category==IN}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==occupation}
+	)|
+	
+//18	
+	(
+	{Lookup.majorType==occupation}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==environment}
+	)|
+//19
+	(
+	{Lookup.majorType==qualifier}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==environment}
+	)|
+//20
+	(
+	{Lookup.majorType==disorder}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==environment}
+	)
+)
+:con
+-->
+:con.Environment = {Rule=Test3}
+
+//---------------------------------------------------Findings = 45--------------------------------------------------
+
+Rule: Test4
+(
+//1
+(
+{Lookup.majorType==finding}
+{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+{Lookup.majorType==finding}
+)|
+//2
+(
+{Lookup.majorType==occupation}
+{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+{Lookup.majorType==finding}
+)|
+//3
+(
+{Lookup.majorType==finding}
+{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+{Lookup.majorType==finding}
+{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+{Lookup.majorType==finding}
+)|
+//4
+(
+{Lookup.majorType==qualifier}
+{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+{Lookup.majorType==finding}
+)|
+//5
+(
+{Lookup.majorType==qualifier}
+{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+{Lookup.majorType==qualifier}
+{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+{Lookup.majorType==finding}
+)|
+//6
+(
+{Lookup.majorType==body}
+{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+{Lookup.majorType==finding}
+)|
+//7
+(
+{Lookup.majorType==finding}
+{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+{Lookup.majorType==body}
+)|
+//8
+(
+{Lookup.majorType==finding}
+{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+{Token.category == IN}
+{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+{Token.category == DT}
+{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+{Lookup.majorType==body}
+)|
+//9
+(
+{Lookup.majorType==finding}
+{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+{Token.category == IN}
+{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+{Lookup.majorType==body}
+)|
+//10
+(
+{Lookup.majorType==finding}
+{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+{Token.category == TO}
+{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+{Token.category == DT}
+{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+{Lookup.majorType==observable}
+)|
+//11
+(
+{Lookup.majorType==finding}
+{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+{Token.category == TO}
+{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+{Lookup.majorType==observable}
+)|
+//12
+(
+{Lookup.majorType==qualifier}
+{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+{Token.kind==punctuation,SpaceToken.string !=~ "[\\n\\r]"}
+{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+{Lookup.majorType==finding}
+{Token.kind==punctuation,SpaceToken.string !=~ "[\\n\\r]"}
+{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+{Lookup.majorType==finding}
+{Token.kind==punctuation,SpaceToken.string !=~ "[\\n\\r]"}
+{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+{Lookup.majorType==finding}
+)|
+//13
+(
+{Lookup.majorType==qualifier}
+{Token.kind==punctuation,SpaceToken.string !=~ "[\\n\\r]"}
+{Lookup.majorType==finding}
+{Token.kind==punctuation,SpaceToken.string !=~ "[\\n\\r]"}
+{Lookup.majorType==finding}
+{Token.kind==punctuation,SpaceToken.string !=~ "[\\n\\r]"}
+{Lookup.majorType==finding}
+)|
+//14
+(
+{Lookup.majorType==qualifier}
+{Token.kind==punctuation,SpaceToken.string !=~ "[\\n\\r]"}
+{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+{Lookup.majorType==finding}
+{Token.kind==punctuation,SpaceToken.string !=~ "[\\n\\r]"}
+{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+{Lookup.majorType==finding}
+{Token.kind==punctuation,SpaceToken.string !=~ "[\\n\\r]"}
+{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+{Lookup.majorType==finding}
+)|
+//15
+(
+{Lookup.majorType==qualifier}
+{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+{Token.kind==punctuation,SpaceToken.string !=~ "[\\n\\r]"}
+{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+{Lookup.majorType==qualifier}
+{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+{Lookup.majorType==finding}
+)|
+//16
+(
+{Lookup.majorType==qualifier}
+{Token.kind==punctuation,SpaceToken.string !=~ "[\\n\\r]"}
+{Lookup.majorType==qualifier}
+{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+{Lookup.majorType==finding}
+)|
+//17
+(
+{Lookup.majorType==qualifier}
+{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+{Token.kind==punctuation,SpaceToken.string !=~ "[\\n\\r]"}
+{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+{Lookup.majorType==qualifier}
+{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+{Lookup.majorType==finding}
+)|
+//18
+(
+{Lookup.majorType==product}
+{Token.kind==punctuation,SpaceToken.string !=~ "[\\n\\r]"}
+{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+{Lookup.majorType==finding}
+)|
+//19
+(
+{Lookup.majorType==substance}
+{Token.kind==punctuation,SpaceToken.string !=~ "[\\n\\r]"}
+{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+{Lookup.majorType==finding}
+)|
+//20
+(
+{Lookup.majorType==finding}
+{Token.kind==punctuation,SpaceToken.string !=~ "[\\n\\r]"}
+{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+{Lookup.majorType==finding}
+)|
+//21
+(
+{Lookup.majorType==finding}
+{Token.kind==punctuation,SpaceToken.string !=~ "[\\n\\r]"}
+{Lookup.majorType==finding}
+)|
+
+//22
+(
+{Lookup.majorType==product}
+{Token.kind==punctuation,SpaceToken.string !=~ "[\\n\\r]"}
+{Lookup.majorType==finding}
+)|
+//23
+(
+{Lookup.majorType==substance}
+{Token.kind==punctuation,SpaceToken.string !=~ "[\\n\\r]"}
+{Lookup.majorType==finding}
+)|
+//24
+(
+{Lookup.majorType==finding}
+{Token.kind==punctuation,SpaceToken.string !=~ "[\\n\\r]"}
+{Lookup.majorType==qualifier}
+)|
+//25
+(
+{Lookup.majorType==qualifier}
+{Token.kind==punctuation,SpaceToken.string !=~ "[\\n\\r]"}
+{Lookup.majorType==qualifier}
+{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+{Lookup.majorType==finding}
+)|
+//26
+(
+{Lookup.majorType==finding}
+{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+{Token.category == IN}
+{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+{Lookup.majorType==body}
+)|
+//27
+(
+{Lookup.majorType==finding}
+{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+{Token.category == IN}
+{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+{Lookup.majorType==environment}
+)|
+//28
+(
+{Lookup.majorType==finding}
+{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+{Token.category == TO}
+{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+{Lookup.majorType==finding}
+)|
+//29
+(
+{Lookup.majorType==finding}
+{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+{Token.category == TO}
+{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+{Lookup.majorType==environment}
+{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+{Token.category == IN}
+{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+{Lookup.majorType==finding}
+)|
+//30
+(
+{Lookup.majorType==finding}
+{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+{Token.category == TO}
+{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+{Token.category == DT}
+{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+{Lookup.majorType==physical}
+)|
+//31
+(
+{Lookup.majorType==finding}
+{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+{Token.category == TO}
+{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+{Lookup.majorType==physical}
+)|
+//32
+(
+{Lookup.majorType==finding}
+{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+{Token.kind==punctuation,SpaceToken.string !=~ "[\\n\\r]"}
+{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+{Lookup.majorType==physical}
+)|
+//33
+(
+{Lookup.majorType==finding}
+{Token.kind==punctuation,SpaceToken.string !=~ "[\\n\\r]"}
+{Lookup.majorType==physical}
+)|
+//34
+(
+{Lookup.majorType==finding}
+{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+{Token.category == IN}
+{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+{Lookup.majorType==body}
+{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+{Token.category == CC}
+{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+{Lookup.majorType==finding}
+)|
+//35
+(
+{Lookup.majorType==finding}
+{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+{Token.category == TO}
+{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+{Lookup.majorType==occupation}
+)|
+//36
+(
+{Lookup.majorType==finding}
+{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+{Token.category == IN}
+{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+{Lookup.majorType==observable}
+)|
+//37
+(
+{Lookup.majorType==finding}
+{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+{Token.category == IN}
+{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+{Lookup.majorType==physical}
+)|
+//38
+(
+{Lookup.majorType==finding}
+{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+{Token.category == IN}
+{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+{Token.category == DT}
+{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+{Lookup.majorType==physical}
+)|
+//39
+(
+{Lookup.majorType==finding}
+{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+{Token.category == IN}
+{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+{Token.category == DT}
+{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+{Lookup.majorType==environment}
+)|
+//40
+(
+{Lookup.majorType==finding}
+{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+{Token.category == IN}
+{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+{Lookup.majorType==environment}
+)|
+//41
+(
+{Lookup.majorType==finding}
+{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+{Token.category == TO}
+{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+{Lookup.majorType==finding}
+{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+{Token.category == IN}
+{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+{Lookup.majorType==finding}
+)|
+//42
+(
+{Lookup.majorType==finding}
+{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+{Lookup.majorType==attribute}
+{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+{Lookup.majorType==qualifier}
+)|
+//43 loss of appetite
+(
+{Lookup.majorType==qualifier}
+{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+{Token.category == IN}
+{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+{Lookup.majorType==observable}
+)
+|
+//44 appetite loss
+(
+{Lookup.majorType==observable}
+{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+{Lookup.majorType==qualifier}
+)|
+//45 appetite loss
+(
+{Lookup.majorType==qualifier}
+{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+{Lookup.majorType==observable}
+)
+)
+:con
+-->
+:con.Findings = {Rule=Test4}
+
+//------------------------------------------------Observable Entity = 10---------------------------------------------------------
+Rule: Test5
+(
+//1	
+	(
+	{Lookup.majorType==attribute}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.category==IN}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==procedure}
+	)|
+//2	
+	(
+	{Lookup.majorType==observable}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.category==IN}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==procedure}
+	)|
+//3	
+	(
+	{Lookup.majorType==observable}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.category==IN}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==body}
+	)|
+//4	
+	(
+	{Lookup.majorType==product}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==observable}
+	)|
+//5	
+	(
+	{Lookup.majorType==observable}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.category==TO}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==body}
+	)|
+//6
+	(
+	{Lookup.majorType==observable}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.category==IN}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.category==DT}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==body}
+	)|
+//7	
+	(
+	{Lookup.majorType==body}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==observable}
+	)|
+//8	
+	(
+	{Lookup.majorType==product}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==observable}
+	)|
+//9
+	(
+	{Lookup.majorType==observable}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.kind==punctuation,SpaceToken.string !=~ "[\\n\\r]"}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==observable}
+	)|
+//10
+	(
+	{Lookup.majorType==attribute}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.category==IN}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==procedure}
+	)
+)
+:con
+-->
+:con.ObservableEntity = {Rule=Test5}
+
+//--------------------------------------------Occupation = 15-------------------------------------------------------------------
+
+Rule: Test6
+(
+//1
+	({Token.string == "health"}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.category==NN})
+	//Occupation bigrams
+//2
+	|(
+	{Lookup.majorType==occupation}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==occupation}
+	)
+	//Occupation trigrams
+//3	
+	|(
+	{Lookup.majorType==occupation}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==occupation}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==occupation}
+	)
+//Occupation with punctuation
+//4	
+	|(
+	{Lookup.majorType==occupation}
+	{Token.subkind==dashpunct,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==occupation}
+	)
+//5	
+	|(
+	{Lookup.majorType==occupation}
+	{Token.kind==punctuation,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==occupation}
+	)
+//6	
+	|(
+	{Lookup.majorType==occupation}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==occupation}
+	{Token.kind==punctuation,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==occupation}
+	)
+//Occupation with "CC" ,coordinating conjuntion
+//7	
+	|(
+	{Lookup.majorType==occupation}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.category==CC}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==occupation}
+	)
+
+//Occupation with "IN" ,determiner, "TO", preposition and subcoordinating conjuntion
+//8
+	|(
+	{Lookup.majorType==occupation}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.category==IN}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==occupation}
+	)
+//9	
+	|(
+	{Lookup.majorType==occupation}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.category==IN}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.category==DT}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==occupation}
+	)
+//10	
+	|(
+	{Lookup.majorType==occupation}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.category==TO}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==occupation}
+	)
+//11	
+	|(
+	{Lookup.majorType==occupation}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.category==TO}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.category==DT}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==occupation}
+	)
+//Occupation associated with 'Environment' tag
+//12
+	|(
+	{Lookup.majorType==environment}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==occupation}
+	)
+//Occupation associated with 'Product/substance' tag
+//13	
+	|(
+	{Lookup.majorType==product}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==occupation}
+	)
+//14
+	|(
+	{Lookup.majorType==substance}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==occupation}
+	)
+//Occupation associated with 'Environment' and 'physical object' tag
+//15
+	|(
+	{Lookup.majorType==occupation}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.category==IN}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==environment}
+	{Token.kind==punctutation,Token.position==startpunct,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==environment}
+	{Token.kind==punctutation,Token.position==endpunct,SpaceToken.string !=~ "[\\n\\r]"}
+	)
+)
+:con
+-->
+:con.Occupation = {Rule=Test6}
+
+//----------------------------------------------------------Organism = 11--------------------------------------------------------------------------
+Rule: Test7
+(
+//Organism within organism phrase
+//1
+	(
+	{Lookup.majorType==organism}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==organism}
+	)|
+//2
+	(
+	{Lookup.majorType==organism}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==organism}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==organism}
+	)|
+//3
+	(
+	{Lookup.majorType==organism}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==organism}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==organism}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==organism}
+	)|
+//4
+// using IN
+
+	(
+	{Lookup.majorType==organism}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.category==IN}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==organism}
+	)|
+//5	
+	(
+	{Lookup.majorType==organism}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.category==CC}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==organism}
+	)|
+//6
+	(
+	{Lookup.majorType==organism}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.category==IN}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==organism}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.category==CC}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==organism}
+	)|
+//7	
+	(
+	{Lookup.majorType==organism}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.category==IN}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.category==DT}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==organism}
+	)|
+//8
+	(
+	{Lookup.majorType==organism}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.category==CC}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.category==DT}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==organism}
+	)|
+//9
+	(
+	{Lookup.majorType==organism}
+	{Token.kind==punctuation}
+	{Lookup.majorType==organism}
+	{Token.category==CC}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==organism}
+	)|
+//10
+	(
+	{Lookup.majorType==organism}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.kind==punctuation,SpaceToken.string !=~ "[\\n\\r]"}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==organism}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.kind==punctuation,SpaceToken.string !=~ "[\\n\\r]"}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.category==CC}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==organism}
+	)|
+//11
+	(
+	{Lookup.majorType==organism}
+	{Token.kind==punctuation,SpaceToken.string !=~ "[\\n\\r]"}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==organism}
+	{Token.kind==punctuation,SpaceToken.string !=~ "[\\n\\r]"}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==organism}
+	{Token.kind==punctuation,SpaceToken.string !=~ "[\\n\\r]"}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.category==CC}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==organism}
+	)
+)
+:con
+-->
+:con.Organism = {Rule=Test7}
+
+//----------------------------------------------------Person = 6--------------------------------------------------------
+
+Rule: Test8
+(
+//1	
+	(
+	{Lookup.majorType==disorder}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==person}
+	)|
+//2 	
+	(
+	{Lookup.majorType==person}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==person}
+	)|
+//3	
+	(
+	{Lookup.majorType==person}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.category==IN}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.category==DT}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==environment}
+	)|
+//4	
+	(
+	{Lookup.majorType==person}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.category==IN}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==physical}
+	)|
+//5	
+	(
+	{Lookup.majorType==person}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.category==IN}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==environment}
+	)|
+//6	
+	(
+	{Lookup.majorType==person}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.kind==punctuation,SpaceToken.string !=~ "[\\n\\r]"}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==environment}
+	)
+)
+:con
+-->
+:con.Person = {Rule=Test8}
+
+//---------------------------------------------Physical object = 27-------------------------------------------------------------------------
+Rule: Test9
+(
+//PhysicalObject within PhysicalObject phrase
+//1
+	(
+	{Lookup.majorType==physical}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==physical}
+	)|
+//2
+	(
+	{Lookup.majorType==physical}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==physical}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==physical}
+	)|
+//3
+	(
+	{Lookup.majorType==physical}
+	{Lookup.majorType==physical}
+	)|
+//4
+	(
+	{Lookup.majorType==physical}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==physical}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==physical}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==physical}
+	)|
+
+//Compound PhysicalObject with other semantic categories
+//5
+	(
+	{Lookup.majorType==environment}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==physical}
+	)|
+//6
+	(
+	{Lookup.majorType==attribute}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==procedure}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==physical}
+	)|
+//7
+	(
+	{Lookup.majorType==qualifier}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==physical}
+	)|
+//8
+	(
+	{Lookup.majorType==qualifier}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==qualifier}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==physical}
+	)|
+
+//9
+	(
+	{Lookup.majorType==procedure}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==physical}
+	)|
+//10
+	(
+	{Lookup.majorType==physical}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==attribute}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==physical}
+	)|
+//11
+	(
+	{Lookup.majorType==physical}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==attribute}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==physical}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==physical}
+	)|
+//12
+	(
+	{Lookup.majorType==qualifier}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==body}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==physical}
+	)|
+
+//Compund PhysicalObjects using 'CC','TO', preposition (IN) ,determiner (DT) and subcoordinating conjunctions 
+//13	
+	(
+	{Lookup.majorType==physical}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.category==IN}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==physical}
+	)|
+//14	
+	(
+	{Lookup.majorType==physical}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.category==TO}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==physical}
+	)|
+//15	
+	(
+	{Lookup.majorType==physical}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.category==CC}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==physical}
+	)|
+//16	
+	(
+	{Lookup.majorType==physical}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.category==IN}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==physical}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.category==CC}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==physical}
+	)|
+//17 	
+	(
+	{Lookup.majorType==physical}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.category==IN}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==physical}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==physical}
+	)|
+//Compund PhysicalObject using punctuations 
+//18	
+	(
+	{Lookup.majorType==physical}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.kind==punctuation,SpaceToken.string !=~ "[\\n\\r]"}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==physical}
+	)|
+//19	
+	(
+	{Lookup.majorType==physical}
+	{Token.kind==punctuation,SpaceToken.string !=~ "[\\n\\r]"}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==physical}
+	)|
+//20	
+	(
+	{Lookup.majorType==physical}
+	{Token.kind==punctuation,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==physical}
+	)|
+//21	
+	(
+	{Lookup.majorType==physical}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.kind==punctuation,SpaceToken.string !=~ "[\\n\\r]"}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==physical}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.category==CC}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==physical}
+	)|
+//22	
+	(
+	{Lookup.majorType==physical}
+	{Token.kind==punctuation,SpaceToken.string !=~ "[\\n\\r]"}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==physical}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.category==CC}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==physical}
+	)|
+//23	
+	(
+	{Lookup.majorType==physical}
+	{Token.kind==punctuation,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==physical}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.category==CC}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==physical}
+	)|
+//24	
+	(
+	{Lookup.majorType==physical}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.kind==punctuation,SpaceToken.string !=~ "[\\n\\r]"}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==physical}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.kind==punctuation,SpaceToken.string !=~ "[\\n\\r]"}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.category==CC}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==physical}
+	)|
+//Compund PhysicalObject using punctuations and other semantic categories 
+//25	
+	(
+	{Lookup.majorType==body}
+	{Token.kind==punctuation,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==body}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==physical}
+	)|
+//26	
+	(
+	{Lookup.majorType==physical}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.kind==punctuation,SpaceToken.string !=~ "[\\n\\r]"}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==environment}
+	)|
+//27	
+	(
+	{Lookup.majorType==environment}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.kind==punctuation,SpaceToken.string !=~ "[\\n\\r]"}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==physical}
+	)
+)
+:con
+-->
+:con.PhysicalObject = {Rule=Test9}
+
+//-----------------------------------------------------Procedure = 52------------------------------------------------------------------
+
+Rule: Test10
+(
+//Multiple Procedures
+//1	
+	(
+	{Lookup.majorType==procedure}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==procedure}
+	)|
+//2	
+	(
+	{Lookup.majorType==procedure}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==procedure}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==procedure}
+	)|
+//compound Procedures with other semantic types
+//3	
+	(
+	{Lookup.majorType==body}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==procedure}
+	)|
+//4	
+	(
+	{Lookup.majorType==procedure}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==body}
+	)|
+//5	
+	(
+	{Lookup.majorType==qualifier}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==procedure}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==procedure}
+	)|
+//6	
+	(	
+	{Lookup.majorType==qualifier}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==procedure}
+	)|
+//7	
+	(
+	{Lookup.majorType==procedure}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==person}
+	)|
+//8	
+	(
+	{Lookup.majorType==physical}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==procedure}
+	)|
+	
+//Compund Procedures using 'TO', preposition (IN) ,determiner (DT) and subcoordinating conjunctions 
+//9
+	(
+	{Lookup.majorType==procedure}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.category==IN}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==body}
+	)|
+//10	
+	(
+	{Lookup.majorType==procedure}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.category==TO}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==environment}
+	)|
+//11
+	(
+	{Lookup.majorType==procedure}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.category==IN}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.category==DT}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==body}
+	)|
+//12	
+	(
+	{Lookup.majorType==procedure}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.category==IN}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==body}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.category==IN}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==body}
+	)|
+//13	
+	(
+	{Lookup.majorType==qualifier}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==procedure}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.category==IN}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==body}
+	)|
+//14
+	(
+	{Lookup.majorType==qualifier}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==physicalobject}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==procedure}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.category==IN}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==body}
+	)|
+//15
+	(
+	{Lookup.majorType==procedure}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.category==IN}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==disorder}
+	)|
+//16	
+	(
+	{Lookup.majorType==procedure}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.category==IN}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.category==DT}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==disorder}
+	)|
+//17	
+	(
+	{Lookup.majorType==procedure}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.category==IN}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==finding}
+	)|
+//18	
+	(
+	{Lookup.majorType==procedure}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.category==IN}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.category==DT}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==finding}
+	)|
+//Body structures with ccordinating conjunction 'CC' and punctuation
+//19	
+	(
+	{Lookup.majorType==procedure}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.category==CC}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==procedure}
+	)|
+//20
+	(
+	{Lookup.majorType==procedure}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.category==CC}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.category==DT}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==procedure}
+	)|
+	
+//long multiword concepts in Body structures with ccordinating conjunction 'CC','IN' and punctuation
+//21
+(
+	{Lookup.majorType==procedure}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.category==IN}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.category==DT}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==body}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.kind==punctuation,SpaceToken.string !=~ "[\\n\\r]"}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==body}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.kind==punctuation,SpaceToken.string !=~ "[\\n\\r]"}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==body}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.kind==punctuation,SpaceToken.string !=~ "[\\n\\r]"}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.category==CC}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==body}
+	)|
+	
+//22	
+	(
+	{Lookup.majorType==procedure}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.category==IN}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.category==DT}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==procedure}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.kind==punctuation,SpaceToken.string !=~ "[\\n\\r]"}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==procedure}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.kind==punctuation,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.category==CC}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==procedure}
+	)|
+//23	
+	(
+	{Lookup.majorType==procedure}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.category==CC}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==procedure}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.category==IN}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==body}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.category==IN}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==body}
+	)|
+//24
+	(
+	{Lookup.majorType==procedure}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.category==CC}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==procedure}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.category==IN}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==body}
+	)|
+//25	
+	(
+	{Lookup.majorType==procedure}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.category==IN}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==body}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.category==IN}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==body}
+	)|
+//26	
+	(
+	{Lookup.majorType==procedure}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.category==IN}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==qualifier}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==body}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.category==IN}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==procedure}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.category==CC}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==procedure}
+	)|
+//27
+	(
+	{Lookup.majorType==procedure}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.category==IN}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==qualifier}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==body}
+	)|
+//28
+	(
+	{Lookup.majorType==procedure}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.category==IN}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==procedure}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.category==CC}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==procedure}
+	)|
+
+// Compound procedures using some other concepts
+//29
+	(
+	{Lookup.majorType==procedure}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.category==IN}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.category==DT}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==environment}
+	)|
+//30	
+	(
+	{Lookup.majorType==procedure}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.category==IN}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==environment}
+	)|
+//31	
+	(
+	{Lookup.majorType==environment}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==procedure}
+	)|
+//32	
+	(
+	{Lookup.majorType==procedure}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.kind==punctuation,SpaceToken.string !=~ "[\\n\\r]"}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==occupation}
+	)|
+//33	
+	(
+	{Lookup.majorType==procedure}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.category==IN}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==occupation}
+	)|
+//34	
+	(
+	{Lookup.majorType==procedure}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.category==IN}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==environment}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==environment}
+	)|
+// using finding and disorder
+//35
+	(
+	{Lookup.majorType==qualifier}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==procedure}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.category==IN}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==finding}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.category==IN}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==body}
+	)|
+//36	
+	(
+	{Lookup.majorType==procedure}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.category==IN}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==finding}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.category==IN}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==procedure}
+	)|
+//37	
+	(
+	{Lookup.majorType==procedure}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.category==IN}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==disorder}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.category==IN}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==procedure}
+	)|
+//38
+	(
+	{Lookup.majorType==disorder}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==procedure}
+	)|
+//39	
+	(
+	{Lookup.majorType==finding}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==procedure}
+	)|
+//40	
+	(
+	{Lookup.majorType==qualifier}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==disorder}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==procedure}
+	)|
+//41	
+	(
+	{Lookup.majorType==procedure}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.category==IN}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==body}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.category==IN}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==finding}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==body}
+	)|
+//42	
+	(
+	{Lookup.majorType==procedure}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.category==IN}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==qualifier}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==body}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.category==IN}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==body}
+	)|
+//43	
+	(
+	{Lookup.majorType==qualifier}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==qualifier}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==body}
+	)|
+		
+// procedure using substance tag
+//44
+	(
+	{Lookup.majorType==procedure}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.category==IN}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==body}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.category==IN}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==substance}
+	)|
+//45	
+	(
+	{Lookup.majorType==procedure}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.category==IN}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==organism}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.category==IN}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==substance}
+	)|
+//46	
+	(
+	{Lookup.majorType==substance}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==procedure}
+	)|
+//47
+	(
+	{Lookup.majorType==product}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==procedure}
+	)|
+//48
+	(
+	{Lookup.majorType==procedure}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==product}
+	)|
+
+//49	
+	(
+	{Lookup.majorType==procedure}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==substance}
+	)|
+//50
+	(
+	{Lookup.majorType==procedure}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==body}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==disorder}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==body}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.category==IN}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==body}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.category==IN}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==substance}
+	)|
+//51
+	(
+	{Lookup.majorType==procedure}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.category==IN}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.category==DT}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==occupation}
+	)|
+// procedure using verbs
+//52
+	(
+	{Lookup.majorType==procedure}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.category==VBG}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==physicalobject}
+	)
+)
+:con
+-->
+:con.Procedure = {Rule=Test10}
+
+//------------------------------------------------Qualifier value = 12------------------------------------------------------
+Rule: Test11
+(
+//Qualifier Vaulue within Qualifier Value phrase
+//failed on cases like 'oncologic surgery'
+//	(
+//	{Lookup.majorType==qualifier}
+//	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+//	{Lookup.majorType==qualifier}
+//	)|
+//2
+//	(
+//	{Lookup.majorType==qualifier}
+//	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+//	{Lookup.majorType==qualifier}
+//	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+//	{Lookup.majorType==qualifier}
+//	)|
+//	(
+//	{Lookup.majorType==body}
+//	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+//	{Lookup.majorType==qualifier}
+//	)|
+//12
+//	(
+//	{Lookup.majorType==body}
+//	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+//	{Lookup.majorType==qualifier}
+//	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+//	{Lookup.majorType==qualifier}
+//	)|
+//
+//	(
+//	{Lookup.majorType==qualifier}
+//	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+//	{Lookup.majorType==body}
+//	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}//
+//	{Lookup.majorType==qualifier}
+//	)|
+// with "IN", "CC", "TO"
+//	(
+//	{Lookup.majorType==qualifier}
+//	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+//	{Token.category==IN}
+//	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+//	{Lookup.majorType==qualifier}
+//	)|
+//	(
+//	{Lookup.majorType==qualifier}
+//	{Token.kind==punctuation,SpaceToken.string !=~ "[\\n\\r]"}
+//	{Lookup.majorType==qualifier}
+//	{Token.kind==punctuation,SpaceToken.string !=~ "[\\n\\r]"}
+//	{Lookup.majorType==qualifier}
+//	)|
+//	(
+//	{Lookup.majorType==qualifier}
+//	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+//	{Token.category==IN}
+//	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+//	{Lookup.majorType==body}
+//	)|
+//	(
+//	{Lookup.majorType==qualifier}
+//	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+//	{Token.category==CC}
+//	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+//	{Lookup.majorType==qualifier}
+//	)|
+//	(
+//	{Lookup.majorType==procedure}
+//	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+//	{Lookup.majorType==procedure}
+//	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+//	{Lookup.majorType==qualifier}
+//	)|
+
+
+//1
+//punctuation
+	(
+	{Lookup.majorType==qualifier}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.kind==punctuation,SpaceToken.string !=~ "[\\n\\r]"}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==qualifier}
+	)|
+//2
+	(
+	{Lookup.majorType==qualifier}
+	{Token.kind==punctuation,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==qualifier}
+	)|
+
+//3
+	(
+	{Lookup.majorType==qualifier}
+	{Token.kind==punctuation,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==qualifier}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.kind==punctuation,SpaceToken.string !=~ "[\\n\\r]"}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==qualifier}
+	)|
+//4
+	(
+	{Lookup.majorType==qualifier}
+	{Token.kind==punctuation,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==qualifier}
+	{Token.kind==punctuation,SpaceToken.string !=~ "[\\n\\r]"}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==qualifier}
+	)|
+//5
+	(
+	{Lookup.majorType==qualifier}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.kind==punctuation,SpaceToken.string !=~ "[\\n\\r]"}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==qualifier}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.kind==punctuation,SpaceToken.string !=~ "[\\n\\r]"}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==qualifier}
+	)|
+//with other semantic categories
+//6	
+	(
+	{Lookup.majorType==person,Token.string!="at"}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==qualifier}
+	)|
+//7
+	(
+	{Lookup.majorType==qualifier}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==occupation}
+	)|
+//8
+	(
+	{Lookup.majorType==qualifier}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.category==TO}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==body}
+	)|
+//9	
+	(
+	{Lookup.majorType==qualifier}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.category==CC}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==body}
+	)|
+//10
+	(
+	{Lookup.majorType==qualifier}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.kind==punctuation,SpaceToken.string !=~ "[\\n\\r]"}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==environment}
+	)|
+//11
+	(
+	{Lookup.majorType==qualifier}
+	{Token.kind==punctuation,SpaceToken.string !=~ "[\\n\\r]"}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==environment}
+	)|
+//12
+	(
+	{Lookup.majorType==qualifier}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.kind==punctuation,SpaceToken.string !=~ "[\\n]"}
+	{Lookup.majorType==qualifier}
+	{Token.kind==punctuation,SpaceToken.string !=~ "[\\n]"}
+	)
+	)
+:con
+-->
+:con.Qualifier_Value = {Rule=Test11}
+
+//------------------------------------------------Record artifact = 15-----------------------------------------------------
+Rule: Test12
+(
+//	(
+//	{Lookup.majorType==environment}
+//	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+//	{Lookup.majorType==record}
+//	)|
+//Record within record phrase
+//1
+	(
+	{Lookup.majorType==record}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==record}
+	)|
+//2
+	(
+	{Lookup.majorType==record}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==record}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==record}
+	)|
+//3
+	(
+	{Lookup.majorType==record}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==record}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==record}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==record}
+	)|
+//4
+// using IN, CC  with other semantic types 'Person', 'record'
+
+	(
+	{Lookup.majorType==record}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.category==IN}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==person}
+	)|
+//5	
+	(
+	{Lookup.majorType==record}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.category==CC}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==record}
+	)|
+//6
+	(
+	{Lookup.majorType==record}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.category==IN}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.category==DT}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==person}
+	)|
+//7	
+	(
+	{Lookup.majorType==record}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.category==IN}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.category==DT}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==occupation}
+	)|
+//8
+	(
+	{Lookup.majorType==record}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.category==IN}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==occupation}
+	)|
+//9
+	(
+	{Lookup.majorType==procedure}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==record}
+	)|
+//10
+	(
+	{Lookup.majorType==disorder}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==record}
+	)|
+//11
+	(
+	{Lookup.majorType==finding}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==record}
+	)|
+//12
+	(
+	{Lookup.majorType==occupation}
+	{Token.kind==punctuation,SpaceToken.string !=~ "[\\n\\r]"}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==record}
+	)|
+//13
+//using TO
+	(
+	{Lookup.majorType==record}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.category==TO}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==environment}
+	)|
+//14	
+	(
+	{Lookup.majorType==record}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.category==TO}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==procedure}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==record}
+	)|
+//15
+	(
+	{Lookup.majorType==environment}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.kind==punctuation,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==environment}
+	{Token.kind==punctuation,SpaceToken.string !=~ "[\\n\\r]"}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==record}
+	)
+)
+:con
+-->
+:con.Record_Artifact = {Rule=Test12}
+
+//-----------------------------------------------Regime therapy = 14--------------------------------------------
+Rule: Test13
+(
+//	|
+//	(
+//	{Lookup.majorType==qualifier}
+//	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+//	{Lookup.majorType==regime}
+//	)
+//1
+	(
+	{Lookup.majorType==regime}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.category==IN}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==product}
+	)|
+//2
+	(
+	{Lookup.majorType==regime}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.category==IN}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.category==DT}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==product}
+	)|
+//3	
+	(
+	{Lookup.majorType==regime}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.category==IN}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==substance}
+	)|
+//4
+	(
+	{Lookup.majorType==regime}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.category==CC}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==substance}
+	)|
+//5
+	(
+	{Lookup.majorType==regime}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.category==IN}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.category==DT}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==substance}
+	)|
+//6	
+	(
+	{Lookup.majorType==disorder}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==regime}
+	)|
+//7
+	(
+	{Lookup.majorType==regime}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==regime}
+	)|
+//8
+	(
+	{Lookup.majorType==regime}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.category==TO}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==body}
+	)|
+//9
+	(
+	{Lookup.majorType==regime}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.category==IN}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==person}
+	)|
+//10
+	(
+	{Lookup.majorType==regime}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.category==IN}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==body}
+	)|
+//11
+	(
+	{Lookup.majorType==regime}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.category==IN}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.category==DT}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==body}
+	)|
+//12
+	(
+	{Lookup.majorType==regime}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.kind==punctuation,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==regime}
+	{Token.kind==punctuation,SpaceToken.string !=~ "[\\n\\r]"}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==qualifier}
+	)|
+//13
+	(
+	{Lookup.majorType==regime}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.kind==punctuation,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==regime}
+	{Token.kind==punctuation,SpaceToken.string !=~ "[\\n\\r]"}
+	)|
+//14
+	(
+	{Lookup.majorType==regime}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.category==DT}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==regime}
+	)
+)
+:con
+-->
+:con.RegimeTherapy = {Rule=Test13}
+
+//--------------------------------------------------------Situation = 17------------------------------------------------------------
+Rule: Test14
+(
+//1
+	(
+	{Lookup.majorType==situation}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==procedure}
+	)|
+//2
+	(
+	{Lookup.majorType==situation}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.category==IN}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==procedure}
+	)|
+//3
+	(
+	{Lookup.majorType==situation}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.category==IN}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.category==DT}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==procedure}
+	)|
+//4
+	(
+	{Lookup.majorType==situation}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==qualifier}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==procedure}
+	)|
+//5
+	(
+	{Lookup.majorType==observable}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.category==IN}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==body}
+	)|
+//6
+	(
+	{Lookup.majorType==situation}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==qualifier}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==qualifier}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==disorder}
+	)|
+//7
+	(
+	{Lookup.majorType==situation}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==disorder}
+	)|
+//8
+	(
+	{Lookup.majorType==situation}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.category==IN}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==disorder}
+	)|
+//9
+	(
+	{Lookup.majorType==situation}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.category==IN}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==finding}
+	)|
+//10
+	(
+	{Lookup.majorType==situation}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.category==IN}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.category==DT}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==disorder}
+	)|
+//11
+	(
+	{Lookup.majorType==situation}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.category==IN}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.category==DT}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==finding}
+	)|
+//12
+	(
+	{Lookup.majorType==situation}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.category==IN}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.category==DT}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==situation}
+	)|
+//13
+	(
+	{Lookup.majorType==situation}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.category==IN}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==situation}
+	)|
+
+//14
+	(
+	{Lookup.majorType==qualifier}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==situation}
+	)|
+//15
+	(
+	{Lookup.majorType==situation}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.category==NNP,Token.length==2}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==procedure}
+	)|
+//16
+	(
+	{Lookup.majorType==situation}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.category==IN}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==qualifier}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==disorder}
+	)|
+//17
+	(
+	{Lookup.majorType==qualifier}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Token.category==IN}
+	{SpaceToken,SpaceToken.string !=~ "[\\n\\r]"}
+	{Lookup.majorType==finding}
+	)
+)
+:con
+-->
+:con.Situation = {Rule=Test14}

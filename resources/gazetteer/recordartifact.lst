@@ -1,0 +1,287 @@
+record type
+record
+card record
+Computer record
+Special activities med report
+med report
+record folder
+Insurance report 
+travel cancellation
+report
+Application
+disabled report
+Disabled registration application 
+minimal report
+full report
+British Association for Adoption and Fostering
+BAAF 
+C/D-adopt
+child report
+C-infant report sent
+D-child 2+yrs rep sent
+Obstetric co-op card duplicate
+chart
+employee report 
+Social security claim report
+claim report
+Power of attorney medical report
+medical report
+Shotgun application 
+certificate
+Record of health event
+Dictated operative report
+Written operative report
+Perioperative record
+Anesthesia record
+Surgical intraoperative record
+Nursing intraoperative record
+Intraoperative record
+Perfusion record
+Curator bonis certificate
+Mobility allowance claim representative
+British Association for Adoption and Fostering (BAAF) Adult 1/2 - adoption: applicant report
+Coroner's postmortem report
+Postmortem report
+Medical certificate of still-birth
+British Association for Adoption and Fostering (BAAF) B1/2 - adoption: birth history
+Court of protection certificate
+Report for Coroner
+Disabled drivers orange badge
+Driving license fitness report
+Disabled driver orange badge report
+Life assurance - preliminary report
+Death certificate
+Report for Procurator-Fiscal
+Police surgeon postmortem report
+DSS RMO RM2 report
+Employment report
+Adoption - birth history report
+birth history report
+C infant report
+Cremation certificate
+British Association for Adoption and Fostering (BAAF) 
+B2 birth history report
+RM10-DHSS DMO report
+D-child 2+yrs report
+DLA 370 report
+DS 1500 report
+Statement of needs
+War pensions report
+B1 obstetric report
+College of American Pathologists Cancer Checklist; Primitive Neuroectodermal Tumor / Ewing Sarcoma: Resection
+Checklist
+Record artifact
+College of American Pathologists Cancer Checklist; Neuroblastoma: Resection
+Employment report - no examination
+Computer record print
+(SD86 C superannuation form) or (SD86 - GP superannuation pay summary)
+Paediatric surveillance admin/form (& [FP/CHS] or [GP/CHS])
+Ancillary staff administration (& [reimbursement])
+Prescription exemption certificate
+(Cremation certification) or (Stat B, C and F cremation certs)
+Stat B,C and F cremation certs
+Health promotion clinic form : [FP/HPC] or [GP/HPC]
+Administrative documentation
+Cause of death clarif. SD17 &/or SD18
+Life assurance report (& preliminary)
+(Driving licence fitness report) or (CLE - fit to hold driving licence)
+Factory insp notif admin 
+Disabled driver: [orange badge (& report)] or [certificate] or [admin]
+College of American Pathologists Cancer Checklist
+College of American Pathologists Cancer Checklist; Gastrointestinal Lymphoma: Resection
+College of American Pathologists Cancer Checklist; Heart: Resection
+College of American Pathologists Cancer Checklist; Ureter: Resection
+College of American Pathologists Cancer Checklist; Bone Marrow: Blood Film, Aspirate, Cell Block, Trephine Biopsy, Touch Imprint
+College of American Pathologists Cancer Checklist; Testis: Retroperitoneal Lymphadenectomy
+College of American Pathologists Cancer Checklist; Stomach: Biopsy
+College of American Pathologists Cancer Checklist; Vagina: Biopsy
+College of American Pathologists Cancer Checklist; Stomach: Resection
+College of American Pathologists Cancer Checklist; Prostate Gland: Radical Prostatectomy
+College of American Pathologists Cancer Checklist; Small Intestine: Polypectomy, Segmental Resection, Pancreaticoduodenectomy, Partial or Complete, With or Without Partial Gastrectomy (Whipple Resection)
+College of American Pathologists Cancer Checklist; Colon and Rectum: Excisional Biopsy (Polypectomy)
+College of American Pathologists Cancer Checklist; Rectum: Local Excision (Transanal Disk Excision)
+College of American Pathologists Cancer Checklist; Thymoma and Thymic Carcinoma: Thymectomy, Other Procedure
+College of American Pathologists Cancer Checklist; Ovary: Oophorectomy, Salpingo-oophorectomy, Subtotal Oophorectomy or Removal of Tumor in Fragments, Hysterectomy with Salpingo-oophorectomy
+College of American Pathologists Cancer Checklist; Pancreas (Endocrine): Excisional Biopsy (Enucleation), Resection
+College of American Pathologists Cancer Checklist; Pancreas (Exocrine): Resection
+College of American Pathologists Cancer Checklist; Breast: Excision Less Than Total Mastectomy (Includes Wire-Guided Localization Excisions); Total Mastectomy, Modified Radical Mastectomy, Radical Mastectomy
+College of American Pathologists Cancer Checklist; Vagina: Excisional Biopsy, Resection
+College of American Pathologists Cancer Checklist; Endometrium: Hysterectomy, With or Without Other Organs or Tissues
+College of American Pathologists Cancer Checklist; Testis: Radical Orchiectomy
+College of American Pathologists Cancer Checklist; Peritoneum: Resection
+College of American Pathologists Cancer Checklist; Melanoma of the Skin: Excision; Re-Excision
+College of American Pathologists Cancer Checklist; Upper Aerodigestive Tract and Minor Salivary Glands: Incisional and Excisional Biopsy/Resection
+College of American Pathologists Cancer Checklist; Major Salivary Glands: Resection
+College of American Pathologists Cancer Checklist; Kidney: Nephrectomy, Partial or Radical
+College of American Pathologists Cancer Checklist; Liver: Resection
+College of American Pathologists Cancer Checklist; Esophagus: Biopsy
+College of American Pathologists Cancer Checklist; Trophoblast: Dilation and Curettage/Resection
+College of American Pathologists Cancer Checklist; Adrenal gland: Resection
+College of American Pathologists Cancer Checklist; Uterine Cervix: Cone Biopsy
+College of American Pathologists Cancer Checklist; Uterine Cervix: Colpectomy, Hysterectomy, Pelvic Exenteration
+College of American Pathologists Cancer Checklist; Fallopian Tube: Unilateral Salpingectomy, Salpingo-oophorectomy, or Hysterectomy with Salpingo-oophorectomy
+College of American Pathologists Cancer Checklist; Gallbladder: Resection/Cholecystectomy
+College of American Pathologists Cancer Checklist; Ampulla of Vater: Ampullectomy
+College of American Pathologists Cancer Checklist; Ampulla of Vater: Pancreaticoduodenectomy
+College of American Pathologists Cancer Checklist; Esophagus: Resection
+College of American Pathologists Cancer Checklist; Extrahepatic Bile Ducts: Resection
+College of American Pathologists Cancer Checklist; Thyroid: Resection
+College of American Pathologists Cancer Checklist; Non-Hodgkin Lymphoma: Biopsy, Resection
+College of American Pathologists Cancer Checklist; Hodgkin Lymphoma: Biopsy/Staging Procedure
+College of American Pathologists Cancer Checklist; Kidney: Biopsy
+College of American Pathologists Cancer Checklist; Brain/Spinal Cord: Biopsy/Resection
+College of American Pathologists Cancer Checklist; Rhabdomyosarcoma and Related Neoplasms: Excision, Local or Wide; Compartmentectomy; Excision, Radical; Amputation; Other
+College of American Pathologists Cancer Checklist; Retinoblastoma: Enucleation, Partial or Complete Exenteration
+College of American Pathologists Cancer Checklist; Carcinoma of the Skin: Resection
+Record entry
+Record extract
+Document section
+Family record folder
+Repeat prescription card
+Fm89 Pt died/med care,PF notif
+Results section
+Review of systems section
+College of American Pathologists Cancer Checklist; Kidney: Resection for Wilms Tumor
+Kick chart 
+SD17/18 cause of death  
+Record organizer
+Chief complaint section
+Family history section
+History of present illness section
+Physical exam section
+Obstetric co-op card
+Clinical statement entry
+Patient record type
+Therapeutic abortion form: [HSA1- green form] or [Form A]
+New patient check admin/form: [FP/RF] or [GP/RF]
+A4 record folder
+Death cert  : [Med A] or [11]
+cert.
+death certificate
+medical certificate
+medical cert.
+Medical cert. of still-birth (& Form 6]
+Mat B1 - certificate of expected confinement
+Battery entry
+Assessment section
+Plan section
+Assessment AND plan section
+Record composition
+Summary clinical document
+Clinical document
+Record document part
+Mat B1 certificate  
+Mat B2 - certificate of confinement
+PM report  : [Coroner] or [Police surg.]
+Lloyd George record  
+Post-mortem report: [Coroner] or [Police surg.]
+Age-sex card record
+Computer record of patient
+Summary of need
+Certificate  : [Court of protection] or [Curator bonis ]
+MRC coronary prevention trial
+MRC coronary screen DNA
+Death administration
+Death certificate form: [Med A] or [11]
+Lloyd George record folder
+HSA1- form
+Form A
+form
+FW 8 - application for prescription exemption
+Section 2 form - compulsory admission for assessment
+Drugs supplied paymen form: [FP34D or [GP34A]
+Items of service admin  
+Staff employment record
+[ANC1] or [GP/PS1]
+Form 3  
+Solicitors report  
+Forms - miscellaneous
+Patient held diabetic record issued
+Form 2  
+Section 3 form - compulsory admission for treatment
+Court of protection
+Curator bonis 
+MRC coronary trial  
+Form GOS18 Ophthalmic referral
+Life assurance report 
+Life assurance preliminary report  
+Road traffic act claim  
+MRC treatment phase
+Patient held record
+Patient held cardiac record issued
+D750 form photocard driving licence
+Other specified report
+Clinical report
+Clinical procedure report
+Statement of special educational needs
+Medicals/reports  
+Housing report
+Statement of special educational needs
+Insurance form
+Heartsave card
+Provider comment report
+Admission history and physical report
+Report of clinical encounter
+Educational visit report
+Conference report
+Flow sheet report
+Consent report
+Advance directive report
+Radiology report
+Pathology report
+Summary report
+Transfer summary report
+Operative report
+Targeted history 
+physical report
+Confirmatory consultation report
+Comprehensive history 
+practice note
+visit note
+Cancer shared care medication card
+History and physical report
+Clinical consultation report
+College of American Pathologists Cancer Checklist; Bone: Resection
+Emergency consultation note
+Other note
+Out of hours non practice note
+Out of hours, practice note
+Twilight visit note
+College of American Pathologists Cancer Checklist; Bone: Biopsy
+discharge summary
+Alert note
+Comment note
+Community nursing note
+College of American Pathologists Cancer Checklist; Soft Tissue: Resection
+College of American Pathologists Cancer Checklist; Prostate Gland:Transurethral Prostatic Resection (TUR), Enucleation Specimen
+College of American Pathologists Cancer Checklist; Appendix: Resection
+Adult echocardiography procedure report
+College of American Pathologists Cancer Checklist; Soft Tissue: Biopsy
+Additional note
+Administration note
+College of American Pathologists Cancer Checklist; Prostate Gland: Needle Biopsy
+CMS supervisory note
+supervisory note
+Relief note
+Regulatory note
+Prescription record
+death summary
+progress note
+passport
+DISCHARGE SUMMARY
+questionnaire
+administrative form
+HSA1- green form
+Therapeutic abortion form
+DISCHARGE DIAGNOSIS
+discharge diagnoses
+addendum
+DISCHARGE MEDICATIONS
+medication list
+house staff note
+procedure note
+prescription
+PACU record
+Section 3 form
+Section 2 form
+non practice report

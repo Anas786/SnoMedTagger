@@ -1,0 +1,136 @@
+/* SnoMedTagger : SNOMED CT Medical Tagger
+ *  Developed by Hafiz Muhammad Anas, Contact : anas_abdani@hotmail.com Or hanas@knysys.com
+ *  Developed by Saman Hina, Contact : saman.hina@gmail.com Or scsh@leeds.ac.uk
+ *  -----------------------------------------------------------------------------------
+ *  Copyright (c) 2012-2013, The University of Leeds.
+ *  This application is developed as part of GATE (see http://gate.ac.uk/), and is free
+ *  for research purposes 
+ *  Saman Hina, 18-04-2012
+ *  -----------------------------------------------------------------------------------
+ *  SnoMedGazetteer.java
+ *
+ * Copyright (c) 2000-2012, The University of Sheffield.
+ *
+ * This file is part of GATE (see http://gate.ac.uk/), and is free
+ * software, licenced under the GNU Library General Public License,
+ * Version 3, 29 June 2007.
+ *
+ * A copy of this licence is included in the distribution in the file
+ * licence.html, and is also available at http://gate.ac.uk/gate/licence.html.
+ *
+ *  anas__000, 13/11/2016
+ *
+ * For details on the configuration options, see the user guide:
+ * http://gate.ac.uk/cgi-bin/userguide/sec:creole-model:config
+ */
+
+Phase: Adminconcept
+Input: Token Lookup 
+Options: control = all
+
+Rule: Test1
+Priority:80
+(
+{Lookup.majorType == finding}
+):con
+-->
+:con.Findings = {Rule=Test1}
+
+Rule: Test2
+Priority:70
+(
+{Lookup.majorType == disorder}
+):con
+-->
+:con.Disorder = {Rule=Test2}
+
+Rule: Test3
+(
+{Lookup.majorType == procedure}
+):con
+-->
+:con.Procedure = {Rule=Test3}
+
+Rule: Test4
+(
+{Lookup.majorType == regime}
+):rcon
+-->
+:rcon.RegimeTherapy = {Rule=Test4}
+
+Rule: Test5
+(
+{Lookup.majorType == observable}
+):con
+-->
+:con.ObservableEntity = {Rule=Test5}
+
+Rule: Test6
+(
+{Lookup.majorType == body}
+):con
+-->
+:con.BodyStructure = {Rule=Test6}
+
+Rule: Test7
+(
+{Lookup.majorType == organism}
+):con
+-->
+:con.Organism = {Rule=Test7}
+
+Rule: Test9
+(
+{Lookup.majorType == physical, Token.category!=VB,Token.category!=VBJ,Token.category!=VBN}
+):rcon
+-->
+:rcon.PhysicalObject = {Rule=Test9}
+
+Rule: Test10
+(
+{Lookup.majorType == environment}
+):con
+-->
+:con.Environment = {Rule=Test10}
+
+Rule: Test11
+(
+{Lookup.majorType == occupation}
+):con
+-->
+:con.Occupation = {Rule=Test11}
+
+Rule: Test12
+(
+{Lookup.majorType == person, Lookup.majorType!=substance,Lookup.majorType!=product}
+):con
+-->
+:con.Person = {Rule=Test12}
+
+Rule: Test13
+(
+{Lookup.majorType == situation}
+):con
+-->
+:con.Situation = {Rule=Test13}
+
+Rule: Test14
+(
+{Lookup.majorType == attribute}
+):con
+-->
+:con.Attribute = {Rule=Test14}
+
+Rule: Test15
+(
+{Lookup.majorType == qualifier}
+):con
+-->
+:con.Qualifier_Value = {Rule=Test15}
+
+Rule: Test16
+(
+{Lookup.majorType == record}
+):con
+-->
+:con.Record_Artifact = {Rule=Test16}

@@ -1,0 +1,17 @@
+environment.lst:environment:ensnomed
+regimetherapy.lst:regime:rsnomed
+disorder.lst:disorder:snomed
+finding.lst:finding:fsnomed
+procedure.lst:procedure:psnomed
+observableentity.lst:observable:osnomed
+bodystructure.lst:body:bsnomed
+organism.lst:organism:orsnomed
+substance.lst:substance:ssnomed
+product.lst:product:prsnomed
+physicalobject.lst:physical:phsnomed
+occupation.lst:occupation:ocsnomed
+person.lst:person:pesnomed
+situation.lst:situation:sitsnomed
+attribute.lst:attribute:atsnomed
+qualifiervalue.lst:qualifier:value
+recordartifact.lst:record:artifact
