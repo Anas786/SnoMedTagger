@@ -1,6 +1,6 @@
 SnoMedTagger : SNOMED CT Medical Tagger
-  Developed by Hafiz Muhammad Anas, Contact : anas_abdani@hotmail.com Or hanas@knysys.com
-  Developed by Saman Hina, Contact : saman.hina@gmail.com Or scsh@leeds.ac.uk
+  * Developed by Hafiz Muhammad Anas, Contact : anas_abdani@hotmail.com Or hanas@knysys.com
+  * Developed by Saman Hina, Contact : saman.hina@gmail.com Or scsh@leeds.ac.uk
   -----------------------------------------------------------------------------------
   Copyright (c) 2012-2013, The University of Leeds.
   This application is developed as part of GATE (see http://gate.ac.uk/), and is free
