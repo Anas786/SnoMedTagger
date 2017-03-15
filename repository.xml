@@ -1,4 +1,4 @@
 <?xml version="1.0"?>  
 <UpdateSite>   
-   <CreolePlugin url="https://github.com/Anas786/SnoMedTagger/" downloadURL="https://github.com/Anas786/SnoMedTagger/archive/master.zip" />  
+   <CreolePlugin url="https://raw.githubusercontent.com/Anas786/SnoMedTagger/master/" downloadURL="https://github.com/Anas786/SnoMedTagger/archive/master.zip" />  
 </UpdateSite>
